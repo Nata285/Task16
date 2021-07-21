@@ -2,6 +2,8 @@ import re
 from pprint import pprint
 # читаем адресную книгу в формате CSV в список contacts_list
 import csv
+import pandas
+import pandas as pd
 
 with open("phonebook_raw.csv", encoding='utf-8') as f:
   rows = csv.reader(f, delimiter=",")
@@ -30,7 +32,37 @@ for element in contacts_list:
 
     Total_list.append(element)
 
+Dict={}
 
+lastname=[]
+firstname=[]
+surname=[]
+organization=[]
+position=[]
+phone=[]
+email=[]
+Dict.setdefault(Total_list[0][0],lastname)
+Dict.setdefault(Total_list[0][1],firstname)
+Dict.setdefault(Total_list[0][2],surname)
+Dict.setdefault(Total_list[0][3],organization)
+Dict.setdefault(Total_list[0][4],position)
+Dict.setdefault(Total_list[0][5],phone)
+Dict.setdefault(Total_list[0][6],email)
+for i in Total_list[1:]:
+
+    lastname.append(i[0])
+    firstname.append(i[1])
+    surname.append(i[2])
+    organization.append(i[3])
+    position.append(i[4])
+    phone.append(i[5])
+    email.append(i[6])
+df=pd.DataFrame(Dict)
+# print(df)
+
+grouped = df.groupby(['lastname','firstname' ])
+x=grouped.groups
+pprint(x)
 
 
 
